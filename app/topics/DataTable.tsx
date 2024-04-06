@@ -1,3 +1,4 @@
+import TopicPriority from '@/components/TopicPriority'
 import TopicStatusBadge from '@/components/TopicStatusBadge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Topic } from '@prisma/client'
@@ -21,7 +22,11 @@ const DataTable = ({topics}: Props) => {
                                     Status
                                 </div>
                             </TableHead>
-                            <TableHead>Priority</TableHead>
+                            <TableHead>
+                                <div className="flex justify-center">
+                                    Priority
+                                </div>
+                            </TableHead>
                             <TableHead>Created At</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -35,7 +40,11 @@ const DataTable = ({topics}: Props) => {
                                             <TopicStatusBadge status={topic.status} />
                                         </div>
                                     </TableCell>
-                                    <TableCell>{topic.priority}</TableCell>
+                                    <TableCell>
+                                        <div className="flex justify-center">
+                                            <TopicPriority priority={topic.priority} />
+                                        </div>
+                                    </TableCell>
                                     <TableCell>
                                         {topic.createdAt.toLocaleDateString("pt-BR", {
                                             year: "2-digit",
