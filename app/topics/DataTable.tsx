@@ -29,7 +29,16 @@ const DataTable = ({topics}: Props) => {
                                     <TableCell>{topic.title}</TableCell>
                                     <TableCell>{topic.status}</TableCell>
                                     <TableCell>{topic.priority}</TableCell>
-                                    <TableCell>{topic.createdAt.toLocaleDateString()}</TableCell>
+                                    <TableCell>
+                                        {topic.createdAt.toLocaleDateString("pt-BR", {
+                                            year: "2-digit",
+                                            month: "2-digit",
+                                            day: "2-digit",
+                                            hour: "numeric",
+                                            minute: "2-digit",
+                                            hour12: true,
+                                        })}
+                                    </TableCell>
                                 </TableRow>
                             ))
                             : null
