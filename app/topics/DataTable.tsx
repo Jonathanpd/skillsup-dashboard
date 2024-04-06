@@ -1,3 +1,4 @@
+import TopicStatusBadge from '@/components/TopicStatusBadge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Topic } from '@prisma/client'
 import { title } from 'process'
@@ -8,8 +9,6 @@ interface Props {
 }
 
 const DataTable = ({topics}: Props) => {
-    //console.log(topics)
-    
     return (
         <div className='w-full mt-5'>
             <div className='rounded-md sm:border'>
@@ -17,7 +16,11 @@ const DataTable = ({topics}: Props) => {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Title</TableHead>
-                            <TableHead>Status</TableHead>
+                            <TableHead>
+                                <div className='flex justify-center'>
+                                    Status
+                                </div>
+                            </TableHead>
                             <TableHead>Priority</TableHead>
                             <TableHead>Created At</TableHead>
                         </TableRow>
@@ -27,7 +30,11 @@ const DataTable = ({topics}: Props) => {
                             ? topics.map((topic) => (
                                 <TableRow key={topic.id} data-href="/">
                                     <TableCell>{topic.title}</TableCell>
-                                    <TableCell>{topic.status}</TableCell>
+                                    <TableCell>
+                                        <div className='flex justify-center'>
+                                            <TopicStatusBadge status={topic.status} />
+                                        </div>
+                                    </TableCell>
                                     <TableCell>{topic.priority}</TableCell>
                                     <TableCell>
                                         {topic.createdAt.toLocaleDateString("pt-BR", {
