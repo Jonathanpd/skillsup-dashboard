@@ -2,6 +2,7 @@ import TopicPriority from '@/components/TopicPriority'
 import TopicStatusBadge from '@/components/TopicStatusBadge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Topic } from '@prisma/client'
+import Link from 'next/link'
 import { title } from 'process'
 import React from 'react'
 
@@ -34,7 +35,9 @@ const DataTable = ({topics}: Props) => {
                         {topics 
                             ? topics.map((topic) => (
                                 <TableRow key={topic?.id} data-href="/">
-                                    <TableCell>{topic?.title}</TableCell>
+                                    <TableCell>
+                                        <Link href={`/topics/${topic?.id}`}>{topic?.title}</Link>
+                                    </TableCell>
                                     <TableCell>
                                         <div className="flex justify-center">
                                             <TopicStatusBadge status={topic?.status} />
