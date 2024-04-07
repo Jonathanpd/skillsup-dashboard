@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
 import { topicSchema } from '@/ValidationSchemas/topics'
 import { z } from 'zod'
@@ -10,16 +10,36 @@ import { Input } from './ui/input'
 import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { Button } from './ui/button'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 type TopicFormData = z.infer<typeof topicSchema>
 
 const TopicForm = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [error, setError] = useState("")
+    const router = useRouter()
+
     const form = useForm<TopicFormData>({
         resolver: zodResolver(topicSchema)
     })
 
     async function onSubmit(values: z.infer<typeof topicSchema>) {
-        console.log(values)
+        try {
+            setIsSubmitting(true)
+            setError("")
+
+            await axios.post("/api/topics", values)
+            setIsSubmitting(false)
+
+            router.push("/topics")
+            router.refresh()
+        } catch (error) {
+            console.log(error)
+            setError("Unknown Error Occured.")
+            setIsSubmitting(false)
+        }
     }
 
     return (
@@ -92,6 +112,7 @@ const TopicForm = () => {
                             )}
                         />
                     </div>
+                    <Button type="submit" disabled={isSubmitting}>Submit</Button>
                 </form>
             </Form>
         </div>
