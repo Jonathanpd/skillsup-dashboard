@@ -1,12 +1,20 @@
 import React from 'react'
 import prisma from '@/prisma/db'
 import TopicDetail from './TopicDetail'
+import { getServerSession } from 'next-auth'
+import options from '@/app/api/auth/[...nextauth]/options'
 
 interface Props {
     params: {id: string}
 }
 
 const ViewTopic = async ({ params }: Props) => {
+    const session = await getServerSession(options)
+
+    if (!session) {
+      return <p className="text-destructive">Access required</p>
+    }
+    
     const topic = await prisma.topic.findUnique({
         where: { id: parseInt(params.id) },
     })

@@ -6,6 +6,8 @@ import { buttonVariants } from '@/components/ui/button'
 import Pagination from '@/components/Pagination'
 import StatusFilter from '@/components/StatusFilter'
 import { Status, Topic } from '@prisma/client'
+import { getServerSession } from 'next-auth'
+import options from '../api/auth/[...nextauth]/options'
 
 export interface SearchParams {
     status: Status
@@ -14,6 +16,12 @@ export interface SearchParams {
 }
 
 const Topics = async ({ searchParams }: { searchParams: SearchParams }) => {
+    const session = await getServerSession(options)
+
+    if (!session) {
+      return <p className="text-destructive">Access required</p>
+    }
+
     const pageSize = 10
     const page = parseInt(searchParams.page) || 1 // current page
 

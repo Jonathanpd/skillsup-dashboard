@@ -2,8 +2,16 @@ import React from 'react'
 import prisma from "@/prisma/db"
 import DashRecentTopics from '@/components/DashRecentTopics'
 import DashChart from '@/components/DashChart'
+import { getServerSession } from 'next-auth'
+import options from './api/auth/[...nextauth]/options'
 
 const Dashboard = async () => {
+  const session = await getServerSession(options)
+
+  if (!session) {
+    return <p className="text-destructive">Access required</p>
+  }
+
   const topics = await prisma.topic.findMany({
     where: {
       NOT: [{status: "CLOSED"}]
