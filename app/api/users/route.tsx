@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import options from "../auth/[...nextauth]/options";
 
 export async function POST(request: NextRequest) {
-    const session = await getServerSession(options)
+/*     const session = await getServerSession(options)
 
     if (!session) {
         return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     if (session.user.role !== "ADMIN") {
         return NextResponse.json({ error: "Not Admin" }, { status: 401 })
-    }
+    } */
 
     //console.log(session)
     
