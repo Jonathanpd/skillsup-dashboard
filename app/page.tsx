@@ -28,13 +28,20 @@ const Dashboard = async () => {
   //console.log(topics)
   //console.log(groupTopic)
 
+  const data = groupTopic.map((item) => {
+    return {
+      name: item.status,
+      total: item._count.id,
+    };
+  });
+
   return (
     <div className="grid gap-4 md:grid-cols-2 px-2">
       <div>
         <DashRecentTopics topics={topics} />
       </div>
       <div>
-        <DashChart />
+        <DashChart data={data} />
       </div>
     </div>
   )
