@@ -12,6 +12,7 @@ import TopicStatusBadge from '@/components/TopicStatusBadge'
 import TopicPriority from '@/components/TopicPriority'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
+import ReactMarkDown from 'react-markdown'
 
 interface Props {
     topic: Topic
@@ -39,8 +40,8 @@ const TopicDetail = ({ topic }: Props) => {
             })}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          {topic?.description}
+        <CardContent className="prose dark:prose-invert">
+          <ReactMarkDown>{topic?.description}</ReactMarkDown>
         </CardContent>
         <CardFooter>
           Updated: {" "}
