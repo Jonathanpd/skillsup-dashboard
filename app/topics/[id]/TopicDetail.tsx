@@ -13,6 +13,7 @@ import TopicPriority from '@/components/TopicPriority'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
+import DeleteButton from './DeleteButton'
 
 interface Props {
     topic: Topic
@@ -64,14 +65,7 @@ const TopicDetail = ({ topic }: Props) => {
         >
           Edit Topic
         </Link>
-        <Link
-          href={`/topics/edit/${topic?.id}`}
-          className={`${buttonVariants({
-            variant: "default",
-          })}`}
-        >
-          Delete Topic
-        </Link>
+        <DeleteButton topicId={topic?.id}/>
       </div>
     </div>
   )
