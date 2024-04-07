@@ -15,13 +15,18 @@ import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import DeleteButton from './DeleteButton'
 import AssignTopic from '@/components/AssignTopic'
+import options from '@/app/api/auth/[...nextauth]/options'
+import { getServerSession } from 'next-auth'
 
 interface Props {
     topic: Topic
     users: User[]
 }
 
-const TopicDetail = ({ topic, users }: Props) => {
+const TopicDetail = async ({ topic, users }: Props) => {
+  const session = await getServerSession(options)
+  const deleteButton = session?.user.role == "ADMIN" && <DeleteButton topicId={topic?.id}/>
+  
   return (
     <div className="lg:grid lg:grid-cols-4">
       <Card className="mx-4 mb-4 lg:col-span-3 lg:mr-4">
@@ -68,7 +73,7 @@ const TopicDetail = ({ topic, users }: Props) => {
         >
           Edit Topic
         </Link>
-        <DeleteButton topicId={topic?.id}/>
+        {deleteButton}
       </div>
     </div>
   )
