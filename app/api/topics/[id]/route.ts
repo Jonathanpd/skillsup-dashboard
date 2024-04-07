@@ -19,7 +19,7 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     })
 
     if (!topic) {
-        return NextResponse.json({ error: "Topic Not Found" }, { status: 400 })
+        return NextResponse.json({ error: "Topic Not Found" }, { status: 404 })
     }
 
     const updateTopic = await prisma.topic.update({
@@ -30,4 +30,20 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     })
 
     return NextResponse.json(updateTopic)
+}
+
+export async function DELETE(request: NextRequest, { params }: Props) {
+    const topic = await prisma.topic.findUnique({
+        where: { id: parseInt(params.id) },
+    })
+
+    if (!topic) {
+        return NextResponse.json({ error: "Topic Not Found" }, { status: 404 })
+    }
+
+    await prisma.topic.delete({
+        where: { id: topic.id },
+    })
+
+    return NextResponse.json({ message: "Topic Deleted" })
 }
