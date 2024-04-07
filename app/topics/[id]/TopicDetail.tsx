@@ -1,4 +1,4 @@
-import { Topic } from '@prisma/client'
+import { Topic, User } from '@prisma/client'
 import React from 'react'
 import {
   Card,
@@ -14,12 +14,14 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import ReactMarkDown from 'react-markdown'
 import DeleteButton from './DeleteButton'
+import AssignTopic from '@/components/AssignTopic'
 
 interface Props {
     topic: Topic
+    users: User[]
 }
 
-const TopicDetail = ({ topic }: Props) => {
+const TopicDetail = ({ topic, users }: Props) => {
   return (
     <div className="lg:grid lg:grid-cols-4">
       <Card className="mx-4 mb-4 lg:col-span-3 lg:mr-4">
@@ -46,7 +48,7 @@ const TopicDetail = ({ topic }: Props) => {
         </CardContent>
         <CardFooter>
           Updated: {" "}
-          {topic?.updatedAt.toLocaleDateString("en-US", {
+          {topic?.updatedAt.toLocaleDateString("pt-BR", {
             year: "2-digit",
             month: "2-digit",
             day: "2-digit",
@@ -57,6 +59,7 @@ const TopicDetail = ({ topic }: Props) => {
         </CardFooter>
       </Card>
       <div className="mx-4 flex lg:flex-col lg:mx-0 gap-2">
+        <AssignTopic topic={topic} users={users} />
         <Link
           href={`/topics/edit/${topic?.id}`}
           className={`${buttonVariants({

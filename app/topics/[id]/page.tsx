@@ -11,12 +11,14 @@ const ViewTopic = async ({ params }: Props) => {
         where: { id: parseInt(params.id) },
     })
 
+    const users = await prisma.user.findMany();
+
     if (!topic) {
         return <p className=" text-destructive">Topic Not Found!</p>
     }
 
     return (
-        <TopicDetail topic={topic} />
+        <TopicDetail topic={topic} users={users} />
     )
 }
 
