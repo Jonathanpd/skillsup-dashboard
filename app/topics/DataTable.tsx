@@ -3,32 +3,59 @@ import TopicStatusBadge from '@/components/TopicStatusBadge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Topic } from '@prisma/client'
 import Link from 'next/link'
-import { title } from 'process'
 import React from 'react'
+import { ArrowDown } from 'lucide-react'
+import { SearchParams } from './page'
 
 interface Props {
     topics: Topic[]
+    searchParams: SearchParams
 }
 
-const DataTable = ({topics}: Props) => {
+const DataTable = ({topics, searchParams}: Props) => {
     return (
         <div className="w-full mt-5">
             <div className="rounded-md sm:border">
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Title</TableHead>
+                            <TableHead>
+                                <Link href={{ query: {...searchParams, orderBy: "title"} }}>
+                                    Title
+                                </Link>
+
+                                {"title" === searchParams.orderBy && (
+                                    <ArrowDown className="inline p-1" />
+                                )}
+                            </TableHead>
                             <TableHead>
                                 <div className="flex justify-center">
-                                    Status
+                                    <Link href={{ query: {...searchParams, orderBy: "status"} }}>
+                                        Status
+                                    </Link>
+                                    {"status" === searchParams.orderBy && (
+                                        <ArrowDown className="inline p-1" />
+                                    )}
                                 </div>
                             </TableHead>
                             <TableHead>
                                 <div className="flex justify-center">
-                                    Priority
+                                    <Link href={{ query: {...searchParams, orderBy: "priority"} }}>
+                                        Priority
+                                    </Link>
+                                    {"priority" === searchParams.orderBy && (
+                                        <ArrowDown className="inline p-1" />
+                                    )}
                                 </div>
                             </TableHead>
-                            <TableHead>Created At</TableHead>
+                            <TableHead>
+                                <Link href={{ query: {...searchParams, orderBy: "createdAt"} }}>
+                                    Created At
+                                </Link>
+                                {"createdAt" === searchParams.orderBy && (
+                                    <ArrowDown className="inline p-1" />
+                                )}
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>

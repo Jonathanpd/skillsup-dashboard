@@ -5,11 +5,12 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import Pagination from '@/components/Pagination'
 import StatusFilter from '@/components/StatusFilter'
-import { Status } from '@prisma/client'
+import { Status, Topic } from '@prisma/client'
 
-interface SearchParams {
+export interface SearchParams {
     status: Status
     page: string
+    orderBy: keyof Topic
 }
 
 const Topics = async ({ searchParams }: { searchParams: SearchParams }) => {
@@ -54,7 +55,7 @@ const Topics = async ({ searchParams }: { searchParams: SearchParams }) => {
                 <StatusFilter />
             </div>
 
-            <DataTable topics={topics}></DataTable>
+            <DataTable topics={topics} searchParams={searchParams} />
 
             <Pagination
                 itemCount={topicCount}
