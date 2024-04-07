@@ -17,6 +17,8 @@ const Topics = async ({ searchParams }: { searchParams: SearchParams }) => {
     const pageSize = 10
     const page = parseInt(searchParams.page) || 1 // current page
 
+    const orderBy = searchParams.orderBy ? searchParams.orderBy : "createdAt"
+
     const statuses = Object.values(Status)
 
     const status = statuses.includes(searchParams.status)
@@ -38,6 +40,9 @@ const Topics = async ({ searchParams }: { searchParams: SearchParams }) => {
     const topicCount = await prisma.topic.count({ where })
     const topics = await prisma.topic.findMany({
         where,
+        orderBy: {
+            [orderBy]: "desc",
+        },
         take: pageSize,
         skip: (page - 1) * pageSize
     })
