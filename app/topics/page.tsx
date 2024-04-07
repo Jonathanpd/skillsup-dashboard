@@ -5,8 +5,19 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import Pagination from '@/components/Pagination'
 
-const Topics = async () => {
-    const topics = await prisma.topic.findMany()
+interface SearchParams {
+    page: string
+}
+
+const Topics = async ({ searchParams }: { searchParams: SearchParams }) => {
+    const pageSize = 10;
+    const page = parseInt(searchParams.page) || 1 // current page
+    const topicCount = await prisma.topic.count();
+
+    const topics = await prisma.topic.findMany({
+        take: pageSize,
+        skip: (page - 1) * pageSize
+    })
 
     return (
         <div>
@@ -17,7 +28,11 @@ const Topics = async () => {
                 New Topic
             </Link>
             <DataTable topics={topics}></DataTable>
-            <Pagination itemCount={26} pageSize={10} currentPage={3} />
+            <Pagination
+                itemCount={topicCount}
+                pageSize={pageSize}
+                currentPage={page}
+            />
         </div>
     )
 }
