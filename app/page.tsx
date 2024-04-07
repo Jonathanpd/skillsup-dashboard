@@ -31,7 +31,7 @@ const Dashboard = async () => {
   return (
     <div className="grid gap-4 md:grid-cols-2 px-2">
       <div>
-        <DashRecentTopics />
+        <DashRecentTopics topics={topics} />
       </div>
       <div>
         <DashChart />
