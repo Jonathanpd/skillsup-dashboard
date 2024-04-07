@@ -46,7 +46,7 @@ const TopicForm = ({topic}: Props) => {
             router.push("/topics")
             router.refresh()
         } catch (error) {
-            console.log(error)
+            console.error(error)
             setError("Unknown Error Occured.")
             setIsSubmitting(false)
         }
