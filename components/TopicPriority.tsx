@@ -14,7 +14,7 @@ const priorityMap: Record<Priority, { label: string, level: 1 | 2 | 3 }> = {
 
 const TopicPriority = ({priority}: Props) => {
   return (
-    <>
+    <div className="flex justify-between">
         <Zap
             className={`${
                 priorityMap[priority].level >= 1 ? "text-red-500" : "text-muted"
@@ -30,7 +30,7 @@ const TopicPriority = ({priority}: Props) => {
                 priorityMap[priority].level >= 3 ? "text-red-500" : "text-muted"
             }`}
         />
-    </>
+    </div>
   )
 }
 
