@@ -33,16 +33,16 @@ const DataTable = ({topics}: Props) => {
                     <TableBody>
                         {topics 
                             ? topics.map((topic) => (
-                                <TableRow key={topic.id} data-href="/">
-                                    <TableCell>{topic.title}</TableCell>
+                                <TableRow key={topic?.id} data-href="/">
+                                    <TableCell>{topic?.title}</TableCell>
                                     <TableCell>
                                         <div className='flex justify-center'>
-                                            <TopicStatusBadge status={topic.status} />
+                                            <TopicStatusBadge status={topic?.status} />
                                         </div>
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex justify-center">
-                                            <TopicPriority priority={topic.priority} />
+                                            <TopicPriority priority={topic?.priority} />
                                         </div>
                                     </TableCell>
                                     <TableCell>
