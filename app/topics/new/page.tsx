@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import React from 'react'
 
 const TopicForm = dynamic(() => import("@/components/TopicForm"), {
-    ssr: false,
+  ssr: false,
 })
 
 const NewTopic = () => {

@@ -13,10 +13,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Button } from './ui/button'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import { Topic } from '@prisma/client'
 
 type TopicFormData = z.infer<typeof topicSchema>
 
-const TopicForm = () => {
+interface Props {
+    topic?: Topic
+}
+
+const TopicForm = ({topic}: Props) => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [error, setError] = useState("")
     const router = useRouter()
@@ -26,13 +31,18 @@ const TopicForm = () => {
     })
 
     async function onSubmit(values: z.infer<typeof topicSchema>) {
+        //console.log(values)
         try {
             setIsSubmitting(true)
             setError("")
 
-            await axios.post("/api/topics", values)
-            setIsSubmitting(false)
+            if (topic) {
+                await axios.patch("/api/topics/" + topic.id, values)
+            } else {
+                await axios.post("/api/topics", values)
+            }
 
+            setIsSubmitting(false)
             router.push("/topics")
             router.refresh()
         } catch (error) {
@@ -52,6 +62,7 @@ const TopicForm = () => {
                     <FormField
                         control={form.control}
                         name="title"
+                        defaultValue={topic?.title}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Topic Title</FormLabel>
@@ -63,6 +74,7 @@ const TopicForm = () => {
                     />
                     <Controller
                         name="description"
+                        defaultValue={topic?.description}
                         control={form.control}
                         render={({ field }) => (
                             <SimpleMDE placeholder="Description" {...field} />
@@ -72,13 +84,17 @@ const TopicForm = () => {
                         <FormField 
                             control={form.control}
                             name="status"
+                            defaultValue={topic?.status}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Status</FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="status..." />
+                                                <SelectValue
+                                                    placeholder="status..."
+                                                    defaultValue={topic?.status}
+                                                />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
@@ -93,13 +109,20 @@ const TopicForm = () => {
                         <FormField 
                             control={form.control}
                             name="priority"
+                            defaultValue={topic?.priority}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Priority</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Priority..." />
+                                                <SelectValue
+                                                    placeholder="Priority..."
+                                                    defaultValue={topic?.priority}
+                                                />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
@@ -112,7 +135,9 @@ const TopicForm = () => {
                             )}
                         />
                     </div>
-                    <Button type="submit" disabled={isSubmitting}>Submit</Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                        { topic ? "Update Topic" : "Create Topic" }
+                    </Button>
                 </form>
             </Form>
         </div>
