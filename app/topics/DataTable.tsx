@@ -11,14 +11,14 @@ interface Props {
 
 const DataTable = ({topics}: Props) => {
     return (
-        <div className='w-full mt-5'>
-            <div className='rounded-md sm:border'>
+        <div className="w-full mt-5">
+            <div className="rounded-md sm:border">
                 <Table>
                     <TableHeader>
                         <TableRow>
                             <TableHead>Title</TableHead>
                             <TableHead>
-                                <div className='flex justify-center'>
+                                <div className="flex justify-center">
                                     Status
                                 </div>
                             </TableHead>
@@ -36,7 +36,7 @@ const DataTable = ({topics}: Props) => {
                                 <TableRow key={topic?.id} data-href="/">
                                     <TableCell>{topic?.title}</TableCell>
                                     <TableCell>
-                                        <div className='flex justify-center'>
+                                        <div className="flex justify-center">
                                             <TopicStatusBadge status={topic?.status} />
                                         </div>
                                     </TableCell>

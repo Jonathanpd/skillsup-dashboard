@@ -80,7 +80,7 @@ const TopicForm = ({topic}: Props) => {
                             <SimpleMDE placeholder="Description" {...field} />
                         )}
                     />
-                    <div className='flex w-full space-x-4'>
+                    <div className="flex w-full space-x-4">
                         <FormField 
                             control={form.control}
                             name="status"
